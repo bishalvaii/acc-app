@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import {  createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
-
-// import { auth } from './firebase.js';
-
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         // User is signed in, navigate to the home page
         navigation.navigate('Admin');
       } else {
-        // User is signed out, navigate to the login page
-        navigation.navigate('Login');
+        // User is signed out, stay on the login page
       }
     });
 
@@ -27,7 +23,6 @@ const LoginScreen = () => {
   }, []);
 
   const handleLogin = () => {
-  
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Login successful
@@ -42,24 +37,10 @@ const LoginScreen = () => {
       });
   };
 
-  const handleRegister = () => {
-   
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Registration successful
-        const user = userCredential.user;
-        // Handle successful registration, navigate to the next screen, etc.
-      })
-      .catch((error) => {
-        // Handle registration errors
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // Display or handle the error message accordingly
-      });
-  };
-
   return (
     <View style={styles.container}>
+      <Text style={styles.welcomeText}>Welcome, Admin!</Text>
+      <Text style={styles.loginText}>Please login to your existing account:</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -73,9 +54,8 @@ const LoginScreen = () => {
         onChangeText={(text) => setPassword(text)}
         value={password}
       />
-      
       <Button title="Login" onPress={handleLogin} />
-      <Button title="Register" onPress={handleRegister} />
+      <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
     </View>
   );
 };
@@ -86,12 +66,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  loginText: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  forgotPasswordText: {
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
   },
 });
 

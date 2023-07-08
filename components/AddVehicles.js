@@ -1,39 +1,38 @@
+import { addDoc, collection } from 'firebase/firestore/lite';
 import React, { useState } from 'react';
 import { View, TextInput, Text, Button, StyleSheet } from 'react-native';
-import { collection, addDoc } from 'firebase/firestore/lite';
 import { db } from '../firebase';
 
-
-const AddHotelForm = () => {
-  const [hotelName, setHotelName] = useState('');
-  const [address, setAddress] = useState('');
+const AddVehicleForm = () => {
+  const [vehicleName, setVehicleName] = useState('');
+  const [vehicleNo, setVehicleNo] = useState('')
   const [guests, setGuests] = useState('');
   const [arrivalDate, setArrivalDate] = useState('');
   const [arrivalTime, setArrivalTime] = useState('');
 
-  const handleAddHotel = async () => {
+  const handleAddVehicle = async () => {
     try {
       // Create a reference to the Firestore collection
-      const hotelsCollection = collection(db, 'hotels');
+      const vehiclesCollection = collection(db, 'vehicles');
       
       // Create a new document with the form data
-      await addDoc(hotelsCollection, {
-        hotelName,
-        address,
+      await addDoc(vehiclesCollection, {
+        vehicleName,
+        vehicleNo,
         guests,
         arrivalDate,
         arrivalTime,
       });
       
-      console.log('Hotel data saved successfully!');
+      console.log('Vehicle data saved successfully!');
       // Reset the form fields after successful submission
-      setHotelName('');
-      setAddress('');
+      setVehicleName('');
+      setVehicleNo('');
       setGuests('');
       setArrivalDate('');
       setArrivalTime('');
     } catch (error) {
-      console.error('Error saving hotel data:', error);
+      console.error('Error saving vehicle data:', error);
     }
   };
   
@@ -41,12 +40,12 @@ const AddHotelForm = () => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Hotel Name:</Text>
+        <Text style={styles.label}>Vehicle Name:</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter hotel name"
-          value={hotelName}
-          onChangeText={text => setHotelName(text)}
+          placeholder="Enter vehicle name"
+          value={vehicleName}
+          onChangeText={text => setVehicleName(text)}
         />
       </View>
       <View style={styles.inputContainer}>
@@ -54,8 +53,8 @@ const AddHotelForm = () => {
         <TextInput
           style={styles.input}
           placeholder="Enter address"
-          value={address}
-          onChangeText={text => setAddress(text)}
+          value={vehicleNo}
+          onChangeText={text => setVehicleNo(text)}
         />
       </View>
       <View style={styles.inputContainer}>
@@ -86,7 +85,7 @@ const AddHotelForm = () => {
           onChangeText={text => setArrivalTime(text)}
         />
       </View>
-      <Button title="Add" onPress={handleAddHotel} />
+      <Button title="Add" onPress={handleAddVehicle} />
     </View>
   );
 };
@@ -112,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddHotelForm;
+export default AddVehicleForm;

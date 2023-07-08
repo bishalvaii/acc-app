@@ -1,9 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-
-
 
 const Schedules = () => {
   const navigation = useNavigation();
@@ -16,55 +14,36 @@ const Schedules = () => {
   ];
 
   return (
-    <View style={styles.container}>
-        <Text style={styles.ticketHeader}>Ticket Information</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.ticketHeader}>Ticket Information</Text>
       <Text style={styles.ticketParagraph}>
-      Annapurna Cable Car welcomes you to exciting journey to the top. See the panaromic beauty of Pokhara along with the view of mountain ranges, fewa taal and more. You can also view the sunrise and sunset. We are open from 5 AM to 6 PM for your sevice. Following are our ticket prices
+        Annapurna Cable Car welcomes you to an exciting journey to the top. See the panoramic beauty of Pokhara along with the view of mountain ranges, Fewa Taal, and more. You can also view the sunrise and sunset. We are open from 5 AM to 6 PM for your service. Following are our ticket prices:
       </Text>
-      <View style={styles.tableHeader}>
-        <Text style={styles.headerText}>Ticket Type</Text>
-        <Text style={styles.headerText}>One Way</Text>
-        <Text style={styles.headerText}>Two Way</Text>
-      </View>
-      {ticketInfo.map((ticket, index) => (
-        <View style={styles.tableRow} key={index}>
-          <Text style={styles.rowText}>{ticket.type}</Text>
-          <Text style={styles.rowText}>{ticket.oneWay}</Text>
-          <Text style={styles.rowText}>{ticket.twoWay}</Text>
+      <View style={styles.tableContainer}>
+        <View style={styles.tableHeader}>
+          <Text style={styles.headerText}>Ticket Type</Text>
+          <Text style={styles.headerText}>One Way</Text>
+          <Text style={styles.headerText}>Two Way</Text>
         </View>
-      ))}
-       <Text style={styles.title}>Terms and Conditions</Text>
+        {ticketInfo.map((ticket, index) => (
+          <View style={styles.tableRow} key={index}>
+            <Text style={styles.rowText}>{ticket.type}</Text>
+            <Text style={styles.rowText}>{ticket.oneWay}</Text>
+            <Text style={styles.rowText}>{ticket.twoWay}</Text>
+          </View>
+        ))}
+      </View>
+      <Text style={styles.title}>Terms and Conditions</Text>
       <Text style={styles.text}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-        finibus dui eu convallis viverra. Sed condimentum lectus in massa
-        sollicitudin, at tempus sem eleifend. Nulla eleifend accumsan
-        accumsan. Curabitur tincidunt fermentum dolor, id pulvinar eros
-        tincidunt ac. Quisque auctor consectetur sagittis. Mauris ac
-        feugiat nisl. Suspendisse eget mauris lorem. Morbi ut mauris ut
-        dolor euismod faucibus et a est. Suspendisse auctor facilisis
-        volutpat. Integer feugiat ligula a urna pellentesque, id auctor
-        orci tristique. Fusce ut pellentesque lorem. Sed ut odio at lacus
-        maximus consectetur. Phasellus fermentum quam id lectus tincidunt,
-        at venenatis dolor feugiat.
+        Lorem ipsum dolor sit amet
       </Text>
       <Text style={styles.text}>
-        Fusce vitae ex at mi varius tincidunt. Donec posuere placerat
-        metus, nec lacinia arcu interdum eu. Nulla eget urna massa. Sed in
-        posuere velit. Nunc eu mollis dui. Fusce a libero id sem venenatis
-        fermentum. Integer sed laoreet ligula, at eleifend sapien. Nam
-        consectetur, nisl eget blandit tempor, tellus est vulputate sem,
-        quis rhoncus lectus felis id leo. Phasellus nec neque auctor,
-        dignissim nunc non, gravida nisl. Curabitur consequat vehicula
-        venenatis. Nullam dictum lobortis velit, nec finibus neque
-        volutpat at. Integer quis dolor nec mi facilisis congue. Sed
-        sodales gravida dolor, vitae vulputate tellus finibus eu. Nam
-        malesuada, lectus et aliquet bibendum, tortor odio fringilla velit,
-        id facilisis turpis mi vel urna.
+        Fusce vitae ex at mi varius tincidunt. Donec posuere placerat metus, nec lacinia arcu interdum eu. Nulla eget urna massa. Sed in posuere velit. Nunc eu mollis dui. Fusce a libero id sem venenatis fermentum. Integer sed laoreet ligula, at eleifend sapien. Nam consectetur, nisl eget blandit tempor, tellus est vulputate sem, quis rhoncus lectus felis id leo. Phasellus nec neque auctor, dignissim nunc non, gravida nisl. Curabitur consequat vehicula venenatis. Nullam dictum lobortis velit, nec finibus neque volutpat at. Integer quis dolor nec mi facilisis congue. Sed sodales gravida dolor, vitae vulputate tellus finibus eu. Nam malesuada, lectus et aliquet bibendum, tortor odio fringilla velit, id facilisis turpis mi vel urna.
       </Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Location')}>
-          <Text style={styles.buttonText}>View More</Text>
-        </TouchableOpacity>
-    </View>
+        <Text style={styles.buttonText}>View More</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
@@ -74,11 +53,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-  tableHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  }, ticketHeader: {
+  ticketHeader: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
@@ -86,6 +61,17 @@ const styles = StyleSheet.create({
   ticketParagraph: {
     fontSize: 16,
     marginBottom: 20,
+  },
+  tableContainer: {
+    marginBottom: 20,
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingBottom: 10,
   },
   headerText: {
     fontWeight: 'bold',
@@ -102,7 +88,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     flex: 1,
     textAlign: 'center',
-  }, button: {
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  button: {
     backgroundColor: '#007aff',
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -112,6 +109,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

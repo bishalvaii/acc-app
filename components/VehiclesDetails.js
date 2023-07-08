@@ -1,37 +1,44 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { collection, getDocs } from 'firebase/firestore/lite';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { db } from '../firebase';
 
-const VehicleDetailsScreen = () => {
-  const vehicles = [
-    {
-      id: 1,
-      name: 'Taxi',
-      logo: require('../assets/car.png'),
-      vehicleNo: 'Ga 1 Ka 3456',
-      totalPassengers: '5'
-      
+const VehicleDetailsScreen = () => { 
+  const navigation = useNavigation();
+  const [vehicles,setVehicles] = useState([])
 
-    },
-    {
-        id: 2,
-        name: 'Bus',
-        logo: require('../assets/car.png'),
-        vehicleNo: 'Ga 1 Ka 3456',
-        totalPassengers: '10'
-    },
-    // Add more hotel objects as needed
-  ];
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const vehiclesCollection = collection(db, 'hotels');
+        const querySnapshot = await getDocs(vehiclesCollection);
+        const vehicleData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setVehicles(vehicleData);
+      } catch (error) {
+        console.error('Error fetching hotels:', error);
+      }
+    };
+
+    fetchVehicles();
+  }, []);
 
   const handleAddVehicles = () => {
-    // Logic to handle adding new hotels and lodges
+   navigation.navigate("AddVehicles")
   };
 
   const renderVehicleItem = ({ item }) => (
     <View style={styles.hotelItemContainer}>
-      <Image source={item.logo} style={styles.hotelLogo} />
+      {/* <Image source={item.logo} style={styles.hotelLogo} /> */}
       <View style={styles.hotelInfoContainer}>
+        <Text style={styles.hotelName}>Vehicle Name:{item.vehicleName}</Text>
         <Text style={styles.hotelName}>Vehicle no.:{item.vehicleNo}</Text>
-        <Text style={styles.hotelAddress}>Total no. of passengers: {item.totalPassengers}</Text>
+        <Text style={styles.hotelAddress}>Total no. of passengers: {item.guests}</Text>
+        <Text style={styles.hotelAddress}>Arrived date:  {item.arrivalDate}</Text>
+        <Text style={styles.hotelAddress}>Arrival time: {item.arrivalTime}</Text>
       </View>
     </View>
   );

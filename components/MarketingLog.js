@@ -5,20 +5,29 @@ const MarketingDetails = () => {
   const vehicles = [
     {
       id: 1,
-      name: 'Taxi',
+      name: 'Hotel updates',
       logo: require('../assets/car.png'),
-      vehicleNo: 'Ga 1 Ka 3456',
+      
+      desc: ' Hotel visited',
       totalPassengers: '5'
       
 
     },
     {
         id: 2,
-        name: 'Bus',
+        name: 'Social media updates',
         logo: require('../assets/car.png'),
-        vehicleNo: 'Ga 1 Ka 3456',
-        totalPassengers: '10'
+       
+        desc: 'Post Shared'
     },
+    {
+      id: 2,
+      name: 'Other updates',
+      logo: require('../assets/car.png'),
+     
+      desc: 'Campaign details',
+      totalPassengers: '10'
+  },
     // Add more hotel objects as needed
   ];
 
@@ -30,8 +39,8 @@ const MarketingDetails = () => {
     <View style={styles.hotelItemContainer}>
       <Image source={item.logo} style={styles.hotelLogo} />
       <View style={styles.hotelInfoContainer}>
-        <Text style={styles.hotelName}>Vehicle no.:{item.vehicleNo}</Text>
-        <Text style={styles.hotelAddress}>Total no. of passengers: {item.totalPassengers}</Text>
+        <Text style={styles.hotelName}>{item.name}</Text>
+        <Text style={styles.hotelAddress}>Hotels visited: {item.desc}</Text>
       </View>
     </View>
   );

@@ -1,72 +1,83 @@
-// HomePage.js
-
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import AntIcon from 'react-native-vector-icons/AntDesign';
 
 const HomePage = () => {
-  const [showSubMenu, setShowSubMenu] = useState(false)
- 
+  const [showMenu, setShowMenu] = useState(false);
+  const navigation = useNavigation();
 
-const navigation = useNavigation();
-  const toggleSubMenu = () => {
-    setShowSubMenu(!showSubMenu)
-  }
+  const toggleMenu = () => {  
+    setShowMenu(!showMenu);
+  };
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
   return (
+    <TouchableWithoutFeedback onPress={() => closeMenu()}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => toggleSubMenu()}>
-          <Text style={styles.menu}>Menu</Text>
+        <TouchableOpacity onPress={() => toggleMenu()}>
+          <Icon name="md-menu" size={30} color="black" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.subMenuItem}>Login</Text>
-          </TouchableOpacity>
+          <Icon name="log-in-outline" size={30} color="black" />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Notices')}>
-          <Text style={styles.menu}>Notice</Text>
+          <Icon name="notifications" size={30} color="black" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
-          <Text style={styles.chat}>Chat</Text>
+          <Icon name="chatbubble-ellipses" size={30} color="black" />
         </TouchableOpacity>
-        {showSubMenu && (
-          <View style={styles.subMenu}>
-          <TouchableOpacity onPress={() => navigation.navigate('Location')}>
-            <Text style={styles.subMenuItem}>Location</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Schedules')}>
-            <Text style={styles.subMenuItem}>Schedules</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('FAQS')}>
-            <Text style={styles.subMenuItem}>FAQs</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Fares')}>
-            <Text style={styles.subMenuItem}>Fares</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Review')}>
-            <Text style={styles.subMenuItem}>Reviews</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Team')}>
-            <Text style={styles.subMenuItem}>Team</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Contact')}>
-            <Text style={styles.subMenuItem}>Contact</Text>
-          </TouchableOpacity>
-        </View>
-        )}
       </View>
+
+      <Modal visible={showMenu} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => closeMenu()}>
+          <View style={styles.overlay}>
+            <View style={styles.menu}>
+              <TouchableOpacity onPress={() => navigation.navigate('Location')}>
+                <Text style={styles.menuItem}>Location</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Schedules')}>
+                <Text style={styles.menuItem}>Schedules</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('FAQS')}>
+                <Text style={styles.menuItem}>FAQs</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Fares')}>
+                <Text style={styles.menuItem}>Fares</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Review')}>
+                <Text style={styles.menuItem}>Reviews</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Team')}>
+                <Text style={styles.menuItem}>Team</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Contact')}>
+                <Text style={styles.menuItem}>Contact</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.closeButton} onPress={() => toggleMenu()}>
+              <AntIcon name="close" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       <View style={styles.body}>
         <Image source={require('../assets/cablecar.jpg')} style={styles.image} />
         <Text style={styles.title}>Welcome to the Annapurna Cable Car Service</Text>
         <Text style={styles.description}>
-          Enjoy the breathtaking views of Pokhara Valley from Sarangkot 
-          during your vacations . We provide you the best experience
+          Enjoy the breathtaking views of Pokhara Valley from Sarangkot during your vacations. We provide you the best experience.
         </Text>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Schedules')}>
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
     </View>
+  </TouchableWithoutFeedback>
   );
 };
 
@@ -84,33 +95,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-  menu: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  subMenu: {
+  menu: {
     backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderRadius: 10,
   },
-  subMenuItem: {
+  menuItem: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#007aff',
-    paddingVertical: 5,
+    paddingVertical: 10,
   },
-  body: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  chat: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#007aff',
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   body: {
     flex: 1,
@@ -119,7 +125,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: 300,
+    width: 400,
     height: 250,
     resizeMode: 'contain',
   },

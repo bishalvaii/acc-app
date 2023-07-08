@@ -1,18 +1,24 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
-const Notices = ({ notice, onClose, onConfirm }) => {
+const Notices = ({ notice, onClose, handleConfirmConfirm }) => {
+  const navigation = useNavigation()
+  const handleConfirm = () => {
+    navigation.navigate('Home')
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Notice</Text>
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-          <Text style={styles.closeButtonText}>X</Text>
-        </TouchableOpacity>
+        <Text style={styles.headerText}>NOTICE!!</Text>
+        
       </View>
       <Image source={require('../assets/acc.jpg')} style={styles.logo} />
       <Text style={styles.description}>{notice}</Text>
-      <TouchableOpacity onPress={onConfirm} style={styles.confirmButton}>
+      <Text style={styles.additionalText}>We are closed from 11:30 a.m to 12:30 pm everyday forlunch time break .
+       So, we inform you to not hurry fortickets. Service will be interrupted at this time Thank you ,
+        Team Annapurna Cable Car </Text>
+      <TouchableOpacity onPress={handleConfirm} style={styles.confirmButton}>
         <Text style={styles.confirmButtonText}>Yes, I understand</Text>
       </TouchableOpacity>
     </View>
@@ -34,6 +40,7 @@ const styles = {
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: 'red'
   },
   closeButton: {
     padding: 10,
@@ -42,14 +49,20 @@ const styles = {
     fontSize: 20,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
     marginBottom: 20,
   },
   description: {
     fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  additionalText: {
+    fontSize: 16,
     marginBottom: 20,
     textAlign: 'center',
+    color: '#888',
   },
   confirmButton: {
     backgroundColor: '#007AFF',

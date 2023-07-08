@@ -24,6 +24,7 @@ import MarketingDetails from './components/MarketingLog';
 import AdminPanel, { SupportChats } from './components/SupportChatsMain';
 import PassDetails from './components/PassDetails';
 import AddHotelForm from './components/AddHotels';
+import AddVehicleForm from './components/AddVehicles';
 
 
 
@@ -70,7 +71,7 @@ export default function App() {
             <Stack.Screen name='SupportMessages' component={SupportChats} />
             <Stack.Screen name='PassDetails' component={PassDetails} />          
               <Stack.Screen name='AddHotels' component={AddHotelForm} />
-
+              <Stack.Screen name='AddVehicles' component={AddVehicleForm} />
 
             
           </>
