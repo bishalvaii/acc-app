@@ -14,39 +14,39 @@ const TeamPage = () => {
       <View style={styles.photoContainer}>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/car.png')}
+            source={require('../assets/user.png')}
             style={styles.photo}
             resizeMode="cover"
           />
-          <Text style={styles.name}>John Doe</Text>
-          <Text style={styles.titleText}>Programmer</Text>
+          <Text style={styles.name}>Mr. Kalu Gurung</Text>
+          <Text style={styles.titleText}>Chairman</Text>
         </View>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/car.png')}
+            source={require('../assets/user.png')}
             style={styles.photo}
             resizeMode="cover"
           />
-          <Text style={styles.name}>Jane Smith</Text>
-          <Text style={styles.titleText}>Designer</Text>
+          <Text style={styles.name}>Mr. Tirthaj Tripathi</Text>
+          <Text style={styles.titleText}>Director</Text>
         </View>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/car.png')}
+            source={require('../assets/user.png')}
             style={styles.photo}
             resizeMode="cover"
           />
-          <Text style={styles.name}>Michael Brown</Text>
-          <Text style={styles.titleText}>Manager</Text>
+          <Text style={styles.name}>Mr. Aajad Shrestha</Text>
+          <Text style={styles.titleText}>Director</Text>
         </View>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/car.png')}
+            source={require('../assets/user.png')}
             style={styles.photo}
             resizeMode="cover"
           />
-          <Text style={styles.name}>Emily Johnson</Text>
-          <Text style={styles.titleText}>Marketing Specialist</Text>
+          <Text style={styles.name}>Mr. Chandra Bahadur Karki</Text>
+          <Text style={styles.titleText}>Director</Text>
         </View>
       </View>
     </View>

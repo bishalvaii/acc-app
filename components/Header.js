@@ -10,13 +10,15 @@ const Header = () => {
   );
 };
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'column',
     alignItems: 'center',
-    paddingVertical: 20,
+    justifyContent: 'center',
+    width: width,
+    height: height,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
@@ -27,9 +29,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   title: {
-    fontSize: 20,
+    fontSize: height * 0.04,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: height * 0.05,
   },
 });
 

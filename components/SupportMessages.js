@@ -3,9 +3,9 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const SupportMessage = ({ message, profileImage, timestamp, personName }) => {
+const SupportMessage = ({ id,message, profileImage, timestamp, personName }) => {
   return (
-    <View style={styles.messageContainer}>
+    <View style={styles.messageContainer}  key={id}>
       <Image source={profileImage} style={styles.profileImage} />
       <Text style={styles.personName}>{personName}</Text>
       <View style={styles.messageContent}>

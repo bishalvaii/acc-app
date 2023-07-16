@@ -1,13 +1,40 @@
 import { useNavigation } from "@react-navigation/native";
-import { signOut } from "firebase/auth";
-import React from "react";
-import { View, Text, TouchableOpacity, Image, Button, FlatList } from "react-native";
-import { auth } from "../firebase";
+import { collection, getDocs } from "firebase/firestore/lite";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Image, Button, FlatList, StyleSheet } from "react-native";
+import { auth, db } from "../firebase";
 import SupportMessage from "./SupportMessages";
-
 
 export const SupportChats = () => {
   const navigation = useNavigation();
+  const [supportMessages, setSupportMessages] = useState([]);
+
+  useEffect(() => {
+    const fetchSupportMessages = async () => {
+      try {
+        const supportMessagesRef = collection(db, "support_messages");
+        const querySnapshot = await getDocs(supportMessagesRef);
+        const messages = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const message = {
+            id: doc.id,
+            message: data.message || "",
+            profileImage: data.profileImage || null,
+            timestamp: data.timestamp || null,
+            personName: data.personName || "",
+          };
+          messages.push(message);
+        });
+        setSupportMessages(messages);
+      } catch (error) {
+        console.error("Error fetching support messages:", error);
+      }
+    };
+    
+
+    fetchSupportMessages();
+  }, []);
 
   const handleViewDetails = () => {
     navigation.navigate('HotelDetails');
@@ -16,7 +43,14 @@ export const SupportChats = () => {
   const handleVehicleDetails = () => {
     navigation.navigate('VehicleDetails');
   }
-
+  
+  const keyExtractor = (item) => {
+    if (item && item.id) {
+      return item.id.toString();
+    }
+    return Math.random().toString(); // Generate a unique key if id is missing
+  };
+  
   const handleMarketingDetails = () => {
     navigation.navigate('MarketingDetails')
   }
@@ -26,35 +60,24 @@ export const SupportChats = () => {
   }
 
   const handleMessages = () => {
-   console.log('This display all messages')
+    console.log('This displays all messages')
   };
 
-  const supportMessages = [
-    {
-      id: 1,
-      message: 'Hello, I need assistance with my booking.',
-      profileImage: require('../assets/cablecar.jpg'),
-      timestamp: '10:30 AM',
-      personName: "Bishal Adhikari"
-    },
-    {
-      id: 2,
-      message: 'Sure, I can help you with that.',
-      profileImage: require('../assets/acc.jpg'),
-      timestamp: '10:32 AM',
-      personName: 'Sujal Poudel'
-    },
-    // Add more support messages as needed
-  ];
-
-  const renderSupportMessage = ({ item }) => (
-    <SupportMessage
-      message={item.message}
-      profileImage={item.profileImage}
-      timestamp={item.timestamp}
-      personName={item.personName}
-    />
-  );
+  const renderSupportMessage = ({ item }) => {
+    // Convert the timestamp object to a string or formatted date string
+    const timestamp = item.timestamp.toDate().toLocaleString();
+  
+    return (
+      <SupportMessage
+        message={item.message}
+        profileImage={item.profileImage}
+        timestamp={timestamp} // Use the converted timestamp
+        personName={item.personName}
+        id={item.id}
+      />
+    );
+  };
+  
 
   return (
     <View style={styles.container}>
@@ -62,7 +85,7 @@ export const SupportChats = () => {
       <FlatList
         data={supportMessages}
         renderItem={renderSupportMessage}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={keyExtractor}
         style={styles.supportMessagesContainer}
       />
       {/* Your other views here */}
@@ -70,7 +93,7 @@ export const SupportChats = () => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -79,4 +102,4 @@ const styles = {
     flex: 1,
     marginTop: 20,
   },
-};
+});

@@ -31,8 +31,9 @@ const FAQList = () => {
       answer:
         'It lies in Lakeside Pokhara, which is 30 minutes away from Pokhara International Airport.',
     },
-    { question: 'Question 2', answer: 'Answer 2' },
-    { question: 'Question 3', answer: 'Answer 3' },
+    { question: 'Can we visit only one way?', answer: 'Yes, you can visit one way.' },
+    { question: 'How far is it from Lakeside', answer: 'It is a 7 minutes ride from Hallanchok' },
+    { question: 'Is cycle allowed on Cable car', answer: 'Yes, you can carry your cycle on cable car' },
   ];
 
   return (
