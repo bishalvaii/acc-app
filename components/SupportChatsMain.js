@@ -26,13 +26,14 @@ export const SupportChats = () => {
           };
           messages.push(message);
         });
+        // Sort the messages by timestamp in descending order (latest message first)
+        messages.sort((a, b) => b.timestamp - a.timestamp);
         setSupportMessages(messages);
       } catch (error) {
         console.error("Error fetching support messages:", error);
       }
     };
     
-
     fetchSupportMessages();
   }, []);
 
@@ -78,7 +79,6 @@ export const SupportChats = () => {
     );
   };
   
-
   return (
     <View style={styles.container}>
       <Button title="See all chats" onPress={handleMessages} />
@@ -87,6 +87,7 @@ export const SupportChats = () => {
         renderItem={renderSupportMessage}
         keyExtractor={keyExtractor}
         style={styles.supportMessagesContainer}
+        inverted // Display the latest message at the top
       />
       {/* Your other views here */}
     </View>
