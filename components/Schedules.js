@@ -7,10 +7,10 @@ const Schedules = () => {
   const navigation = useNavigation();
   // Define the ticket information with fake values
   const ticketInfo = [
-    { type: 'Adult', oneWay: '$10', twoWay: '$18' },
-    { type: 'Child', oneWay: '$5', twoWay: '$9' },
-    { type: 'Senior', oneWay: '$7', twoWay: '$13' },
-    { type: 'Student', oneWay: '$8', twoWay: '$14' },
+    { type: 'Nepali', oneWay: 'NRS 400    ', twoWay: 'NRS 700' },
+    { type: 'SAARC Countries  ' ,oneWay: 'NRS 500', twoWay: 'NRS 800' },
+    { type: 'Other nations', oneWay: 'USD 5', twoWay: 'USD 9' }
+    
   ];
 
   return (
@@ -34,14 +34,15 @@ const Schedules = () => {
         ))}
       </View>
       <Text style={styles.title}>Terms and Conditions</Text>
+      
       <Text style={styles.text}>
-        Lorem ipsum dolor sit amet
-      </Text>
-      <Text style={styles.text}>
-        Fusce vitae ex at mi varius tincidunt. Donec posuere placerat metus, nec lacinia arcu interdum eu. Nulla eget urna massa. Sed in posuere velit. Nunc eu mollis dui. Fusce a libero id sem venenatis fermentum. Integer sed laoreet ligula, at eleifend sapien. Nam consectetur, nisl eget blandit tempor, tellus est vulputate sem, quis rhoncus lectus felis id leo. Phasellus nec neque auctor, dignissim nunc non, gravida nisl. Curabitur consequat vehicula venenatis. Nullam dictum lobortis velit, nec finibus neque volutpat at. Integer quis dolor nec mi facilisis congue. Sed sodales gravida dolor, vitae vulputate tellus finibus eu. Nam malesuada, lectus et aliquet bibendum, tortor odio fringilla velit, id facilisis turpis mi vel urna.
-      </Text>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Location')}>
-        <Text style={styles.buttonText}>View More</Text>
+  The above rate are inclusive of all local taxes and applicable VAT.
+  Child is categorized by their height. Children above 3 feet and up to 4 feet height qualifies for child rate.
+  No tickets applicable for child up to 3 feet height.
+    Elderly citizen and student rates are applicable for Nepali only and requires proof or ID.
+  60 years and above qualifies for elderly citizen rate.      </Text>
+  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Map')}>
+        <Text style={styles.buttonText}>View Location </Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -49,9 +50,10 @@ const Schedules = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     padding: 20,
     backgroundColor: '#fff',
+    height: '100%',
   },
   ticketHeader: {
     fontSize: 24,
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   rowText: {
     fontSize: 14,
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
+    marginBottom: 30,
   },
   buttonText: {
     color: '#fff',

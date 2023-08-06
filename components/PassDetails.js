@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 
 const PassDetails = () => {
@@ -35,7 +36,8 @@ const PassDetails = () => {
   const renderVehicleItem = ({ item }) => (
     <View style={styles.hotelItemContainer}>
       <Image source={item.logo} style={styles.hotelLogo} />
-      <View style={styles.hotelInfoContainer}>  <Text style={styles.hotelName}> {item.name}</Text>
+      <View style={styles.hotelInfoContainer}>  
+      <Text style={styles.hotelName}> {item.name}</Text>
       {item.id !== 3 && (
         <Text style={styles.hotelName}>Issued today: {item.issuedToday}</Text>
       )}
@@ -64,7 +66,7 @@ const PassDetails = () => {
     </View>
   );
 };
-const styles = {
+const styles =  StyleSheet.create({
     container: {
       flex: 1,
       padding: 16,
@@ -108,7 +110,7 @@ const styles = {
       fontSize: 14,
       color: '#888',
     },
-  };
+});
   
 
 export default PassDetails;

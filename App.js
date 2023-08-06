@@ -25,6 +25,7 @@ import AdminPanel, { SupportChats } from './components/SupportChatsMain';
 import PassDetails from './components/PassDetails';
 import AddHotelForm from './components/AddHotels';
 import AddVehicleForm from './components/AddVehicles';
+import Activities from './components/Activities';
 
 
 
@@ -58,12 +59,12 @@ export default function App() {
             <Stack.Screen name="Location" component={Location} />
             <Stack.Screen name="Review" component={Reviews} />
             <Stack.Screen name="Team" component={Team} />
-            <Stack.Screen name="Map" component={MapScreen
-          } />
+            <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="Contact" component={Contact} />
             <Stack.Screen name="Login" component={MyComponent} />
             <Stack.Screen name="Schedules" component={Schedules} />
             <Stack.Screen name="FAQS" component={FAQList} />
+            <Stack.Screen name='Activities' component={Activities} />
             <Stack.Screen name="Admin" component={AdminPage} />
             <Stack.Screen name="HotelDetails" component={HotelDetailsScreen} />
             <Stack.Screen name="VehicleDetails" component={VehicleDetailsScreen} />

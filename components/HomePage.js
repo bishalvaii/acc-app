@@ -1,13 +1,84 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import OfferModal from './OfferModal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import { useEffect } from 'react';
+import { db } from '../firebase';
+import { collection, getDocs, query } from 'firebase/firestore/lite';
 
 const HomePage = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [currentOffer, setCurrentOffer] = useState(false);
+  const [showOfferModal, setShowOfferModal] = useState(false)
+ 
+
+
   const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   //fetch latestest offers from offers collection in cloud firestore firebase
+  //   const unsubscribe = firestore()
+  //   .collection('offers')
+  //   .orderBy('expiryDate', 'desc')
+  //   .limit(1)
+  //   .onSnapShot((snapshot) => {
+  //     if(!snapshot.empty) {
+  //       const data = snapshot.docs[0].data();
+  //       setCurrentOffer(data);
+  //       setShowOfferModal(true);
+  //     }
+  //   });
+  //   return () => unsubscribe();
+
+    
+  // }, [])
+  // useEffect(() => {
+  //   const fetchOffer = async () => {
+  //     try {
+  //       const offersCollection = collection(db, 'offers'); // Replace 'offers' with your collection name
+  //       const offerQuery = query(offersCollection); // Filter by offers that haven't expired
+  //       const querySnapshot = await getDocs(offerQuery);
+  //       if (!querySnapshot.empty) {
+  //         const offerData = querySnapshot.docs[0].data();
+  //         setCurrentOffer(offerData);
+  //         setShowOfferModal(true);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching offer:', error);
+  //     }
+  //   };
+
+  //   fetchOffer();
+  // }, []);
+  useEffect(() => {
+    const fetchOffer = async () => {
+      try {
+        const offersCollection = collection(db, 'offers');
+        const offerQuery = query(offersCollection);
+        const querySnapshot = await getDocs(offerQuery);
+        if (!querySnapshot.empty) {
+          const offerData = querySnapshot.docs[0].data();
+          setCurrentOffer(offerData);
+          console.log('Offer Data:', offerData); // Add this log statement
+          setShowOfferModal(true);
+        } else {
+          setShowOfferModal(false); // If there are no offers, close the modal
+        }
+      } catch (error) {
+        console.error('Error fetching offer:', error);
+        setShowOfferModal(false); // If there's an error, close the modal
+      }
+    };
+  
+    fetchOffer();
+  }, []);
+  
+
+  const handleOfferModalClose = () => {
+    setShowOfferModal(false)
+  }
 
   const toggleMenu = () => {  
     setShowMenu(!showMenu);
@@ -16,6 +87,7 @@ const HomePage = () => {
     setShowMenu(false);
   };
   return (
+    
     <TouchableWithoutFeedback onPress={() => closeMenu()}>
     <View style={styles.container}>
       <View style={styles.header}>
@@ -32,7 +104,14 @@ const HomePage = () => {
           <Icon name="chatbubble-ellipses" size={30} color="black" />
         </TouchableOpacity>
       </View>
-
+      {currentOffer && (
+        <OfferModal 
+        isVisible={showOfferModal}
+        onClose={handleOfferModalClose}
+        offer={currentOffer}
+        />
+      )}
+    
       <Modal visible={showMenu} animationType="slide" transparent={true}>
         <TouchableWithoutFeedback onPress={() => closeMenu()}>
           <View style={styles.overlay}>
@@ -45,6 +124,9 @@ const HomePage = () => {
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('FAQS')}>
                 <Text style={styles.menuItem}>FAQs</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Activities')}>
+                <Text style={styles.menuItem}>Activities</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Fares')}>
                 <Text style={styles.menuItem}>Fares</Text>
@@ -76,7 +158,9 @@ const HomePage = () => {
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
+     
     </View>
+    
   </TouchableWithoutFeedback>
   );
 };
