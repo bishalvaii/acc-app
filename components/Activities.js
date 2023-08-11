@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { db } from '../firebase';
 import { useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore/lite';
 
 const ActivitiesScreen = () => {
   const [usersData, setUsersData] = useState([]);
@@ -27,25 +27,24 @@ const ActivitiesScreen = () => {
   ];
 
   useEffect(() => {
-    const fetchUsersData = async () => {
+    const fetchLatestUserData = async () => {
       try {
-        const answersCollection = collection(db, 'answers'); // Replace with your collection name
-        const answersSnapshot = await getDocs(answersCollection);
+        const answersCollection = collection(db, 'answers');
+        const question = query(answersCollection);
+        const querySnapshot = await getDocs(question);
 
-        const userDataArray = [];
-        answersSnapshot.forEach((doc) => {
-          userDataArray.push({ userId: doc.data().userID, questions: doc.data().questions, answers: doc.data().answers });
-        });
-
-        setUsersData(userDataArray);
-        console.log(userDataArray);
+        if (!querySnapshot.empty) {
+          const latestUserDocument = querySnapshot.docs[0].data();
+          setUsersData(latestUserDocument);
+        }
       } catch (error) {
-        console.error('Error fetching users data:', error);
+        console.error('Error fetching latest user data:', error);
       }
     };
 
-    fetchUsersData();
+    fetchLatestUserData();
   }, []);
+
   
 
   const handleSubmit = async () => {
@@ -75,19 +74,19 @@ const ActivitiesScreen = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.title1}>Play Quiz</Text>
       <Text style={styles.subTopic}>Answer the correct one and get a chance to get a free ticket to the cable car</Text>
-      {usersData.map((userData, userIndex) => (
-        <View key={userIndex} style={styles.userContainer}>
-          <Text style={styles.question}>Question: {userData.questions}</Text>
+      {usersData && usersData.answers && (
+        <View style={styles.userContainer}>
+          <Text style={styles.question}>Question: {usersData.questions}</Text>
           <Text style={styles.userAnswers}>Select an answer:</Text>
           <View style={styles.answerOptions}>
-          {userData.answers.map((answer, answerIndex) => (
+            {usersData.answers.map((answer, answerIndex) => (
               <TouchableOpacity
                 key={answerIndex}
                 style={[
                   styles.option,
                   selectedAnswerIndex === answerIndex ? styles.selectedOption : null,
                 ]}
-                disabled={userData.selectedAnswer !== undefined}
+                disabled={isSubmitting}
                 onPress={() => setSelectedAnswerIndex(answerIndex)} // Update selected answer index
               >
                 <Text style={styles.optionText}>{answer}</Text>
@@ -99,16 +98,15 @@ const ActivitiesScreen = () => {
                 )}
               </TouchableOpacity>
             ))}
-            
-            
           </View>
+          <Button
+            title={isSubmitting ? 'Submitting...' : 'Submit Answer'}
+            onPress={handleSubmit}
+            disabled={isSubmitting || selectedAnswerIndex === null} // Disable if no answer selected
+          />
         </View>
-      ))}
-       <Button
-        title={isSubmitting ? 'Submitting...' : 'Submit Answer'}
-        onPress={handleSubmit}
-        disabled={isSubmitting || selectedAnswerIndex === null} // Disable if no answer selected
-      />
+      )}
+      
       {/* ... Rest of the JSX ... */}
       <Text style={styles.title}>Activities to Do</Text>
       {images.map((category, index) => (

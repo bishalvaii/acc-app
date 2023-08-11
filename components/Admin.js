@@ -27,7 +27,9 @@ export const AdminPage = () => {
   const handlePassDetails = () => {
     navigation.navigate('PassDetails')
   }
-
+  const handleQuizDetails = () => {
+    navigation.navigate('AddQuiz');
+  }
   const handleLogOut = () => {
     signOut(auth)
       .then(() => {
@@ -50,6 +52,9 @@ export const AdminPage = () => {
 
   return (
     <View style={styles.container}>
+    <TouchableOpacity style={styles.button} onPress={handleQuizDetails}>
+          <Text style={styles.buttonText}>Add Quiz</Text>
+        </TouchableOpacity>
       
       <View style={styles.topicContainer}>
         <Image source={require('../assets/hotel.png')} style={styles.image} />
