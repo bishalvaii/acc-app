@@ -1,11 +1,22 @@
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Button } from "react-native";
 import { auth } from "../firebase";
 
 export const AdminPage = () => {
+  const [showOptions, setShowOptions] = useState(false);
+  const handleViewAnswer =() => {
+    navigation.navigate('ViewAnswer')
+  }
+  
+  // const handleQuizDetails = () => {
+  //   setShowOptions(true);
+  // };
+  const toggleShowOptions = () => {
+    setShowOptions(!showOptions);
+  };
   const navigation = useNavigation();
 
   const handleViewDetails = () => {
@@ -27,7 +38,7 @@ export const AdminPage = () => {
   const handlePassDetails = () => {
     navigation.navigate('PassDetails')
   }
-  const handleQuizDetails = () => {
+  const handleAddQuizDetails = () => {
     navigation.navigate('AddQuiz');
   }
   const handleLogOut = () => {
@@ -52,9 +63,20 @@ export const AdminPage = () => {
 
   return (
     <View style={styles.container}>
-    <TouchableOpacity style={styles.button} onPress={handleQuizDetails}>
-          <Text style={styles.buttonText}>Add Quiz</Text>
-        </TouchableOpacity>
+   <TouchableOpacity style={styles.button} onPress={toggleShowOptions}>
+        <Text style={styles.buttonText}>Quiz Actions</Text>
+      </TouchableOpacity>
+
+      {showOptions && (
+        <View style={styles.optionContainer}>
+          <TouchableOpacity style={styles.optionButton} onPress={handleAddQuizDetails}>
+            <Text style={styles.optionButtonText}>Add Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.optionButton} onPress={handleViewAnswer}>
+            <Text style={styles.optionButtonText}>View Quiz Answer</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       
       <View style={styles.topicContainer}>
         <Image source={require('../assets/hotel.png')} style={styles.image} />
@@ -159,4 +181,24 @@ const styles = {
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  optionContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  optionButton: {
+    flex: 0.45,
+    backgroundColor: 'darkblue',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    width: '50%',
+    alignSelf: 'center',
+   
+  },
+  optionButtonText: {
+    color: 'white',
+    textAlign: 'center'
+  },
+  
 };

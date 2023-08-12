@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
-import { db } from '../firebase';
+import { db, time } from '../firebase';
 import { useEffect } from 'react';
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore/lite';
+import { addDoc, collection, getDocs, limit, orderBy, query, serverTimestamp } from 'firebase/firestore/lite';
 
 const ActivitiesScreen = () => {
   const [usersData, setUsersData] = useState([]);
@@ -29,12 +29,13 @@ const ActivitiesScreen = () => {
   useEffect(() => {
     const fetchLatestUserData = async () => {
       try {
-        const answersCollection = collection(db, 'answers');
-        const question = query(answersCollection);
-        const querySnapshot = await getDocs(question);
+        const answersCollection = collection(db, 'quiz');
+        const quizQuery = query(answersCollection, orderBy('answers', 'desc')); // Order by answers field
+        const querySnapshot = await getDocs(quizQuery);
 
         if (!querySnapshot.empty) {
           const latestUserDocument = querySnapshot.docs[0].data();
+          console.log(latestUserDocument)
           setUsersData(latestUserDocument);
         }
       } catch (error) {
@@ -53,11 +54,18 @@ const ActivitiesScreen = () => {
         setIsSubmitting(true);
 
         // Send the selected answer to the Firebase database
-        // You can use the selectedAnswerIndex to get the selected answer from usersData
-        // For example: const selectedAnswer = usersData[userIndex].answers[selectedAnswerIndex];
+        const selectedAnswer = usersData.answers[selectedAnswerIndex];
+        const userSubmission = {
+          
+          question: usersData.questions,
+          selectedOptionIndex: selectedAnswerIndex,
+          selectedAnswer: selectedAnswer,
+          timestamp: time
+
+        }
+        // add the user submission to the quiz collection
+        await addDoc(collection(db, 'quiz'), userSubmission)
         
-        // Perform your submission to Firebase here
-        // ...
 
         setIsSubmitting(false);
         setSelectedAnswerIndex(null); // Clear the selected answer after submission

@@ -124,11 +124,17 @@ const MapScreen = () => {
         initialRegion={{
           latitude: userLocation.latitude,
           longitude: userLocation.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitudeDelta: 0.20,
+          longitudeDelta: 0.20,
         }}
       >
         {/* Add a marker for the user's location */}
+        {/* Add a marker for the Annapurna Cable Car */}
+        <Marker
+          coordinate={annapurnaCableCarLocation}
+          title="Annapurna Cable Car"
+          description={`Distance: ${distanceToAnnapurnaCableCar} km`}
+        />
         <Marker
           coordinate={{
             latitude: userLocation.latitude,
@@ -136,12 +142,6 @@ const MapScreen = () => {
           }}
           title="Your Location"
           description="You are here"
-        />
-        {/* Add a marker for the Annapurna Cable Car */}
-        <Marker
-          coordinate={annapurnaCableCarLocation}
-          title="Annapurna Cable Car"
-          description={`Distance: ${distanceToAnnapurnaCableCar} km`}
         />
         {/* You can add the route polyline here */}
       </MapView>

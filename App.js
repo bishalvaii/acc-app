@@ -27,6 +27,7 @@ import AddHotelForm from './components/AddHotels';
 import AddVehicleForm from './components/AddVehicles';
 import Activities from './components/Activities';
 import AddQuiz from './components/AddQuiz';
+import ViewAnswersScreen from './components/ViewQuizAnswer';
 
 
 
@@ -75,6 +76,7 @@ export default function App() {
               <Stack.Screen name='AddHotels' component={AddHotelForm} />
               <Stack.Screen name='AddVehicles' component={AddVehicleForm} />
             <Stack.Screen name='AddQuiz' component={AddQuiz} />
+            <Stack.Screen name='ViewAnswer' component={ViewAnswersScreen} />
             
           </>
         ) : (
