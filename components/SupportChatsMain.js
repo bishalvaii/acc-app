@@ -1,7 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import { collection, getDocs } from "firebase/firestore/lite";
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, Button, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Button,
+  FlatList,
+  StyleSheet,
+} from "react-native";
 import { auth, db } from "../firebase";
 import SupportMessage from "./SupportMessages";
 
@@ -33,41 +41,42 @@ export const SupportChats = () => {
         console.error("Error fetching support messages:", error);
       }
     };
-    
+
     fetchSupportMessages();
   }, []);
 
   const handleViewDetails = () => {
-    navigation.navigate('HotelDetails');
+    navigation.navigate("HotelDetails");
   };
 
   const handleVehicleDetails = () => {
-    navigation.navigate('VehicleDetails');
-  }
-  
+    navigation.navigate("VehicleDetails");
+  };
+
   const keyExtractor = (item) => {
     if (item && item.id) {
       return item.id.toString();
     }
     return Math.random().toString(); // Generate a unique key if id is missing
   };
-  
+
   const handleMarketingDetails = () => {
-    navigation.navigate('MarketingDetails')
-  }
+    navigation.navigate("MarketingDetails");
+  };
 
   const handleSupportMessages = () => {
-    navigation.navigate('SupportMessages')
-  }
+    navigation.navigate("SupportMessages");
+  };
 
   const handleMessages = () => {
-    console.log('This displays all messages')
+    console.log("This displays all messages");
   };
 
   const renderSupportMessage = ({ item }) => {
     // Convert the timestamp object to a string or formatted date string
     const timestamp = item.timestamp.toDate().toLocaleString();
-  
+    console.log("Item:", item);
+
     return (
       <SupportMessage
         message={item.message}
@@ -78,7 +87,7 @@ export const SupportChats = () => {
       />
     );
   };
-  
+
   return (
     <View style={styles.container}>
       <Button title="See all chats" onPress={handleMessages} />
@@ -89,7 +98,6 @@ export const SupportChats = () => {
         style={styles.supportMessagesContainer}
         inverted // Display the latest message at the top
       />
-      {/* Your other views here */}
     </View>
   );
 };

@@ -1,35 +1,52 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { View, TextInput, Button, Text, StyleSheet, Alert } from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = () => {
+    if (!email || !password) {
+      setErrorMessage("Please provide both email and password.");
+      return; // Exit the function early
+    }
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Login successful
         const user = userCredential.user;
+        if (user) {
+          navigation.navigate("Admin");
+        } else {
+          console.log("Incorrect bro");
+        }
+        console.log(user);
         // Handle successful login, navigate to the next screen, etc.
-        navigation.navigate('Admin');
       })
       .catch((error) => {
         // Handle login errors
         const errorCode = error.code;
         const errorMessage = error.message;
         // Display or handle the error message accordingly
-        Alert.alert('Login Error', errorMessage);
+        // Alert.alert("Login Error", errorMessage);
+        console.log(errorMessage);
       });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Welcome, Admin!</Text>
-      <Text style={styles.loginText}>Please login to your existing account:</Text>
+      <Text style={styles.loginText}>
+        Please login to your existing account:
+      </Text>
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -44,6 +61,7 @@ const LoginScreen = () => {
         value={password}
       />
       <Button title="Login" onPress={handleLogin} />
+
       <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
     </View>
   );
@@ -52,23 +70,23 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 20,
   },
   welcomeText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   loginText: {
     fontSize: 16,
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
@@ -76,8 +94,14 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     fontSize: 16,
     marginTop: 10,
-    textAlign: 'center',
-    textDecorationLine: 'underline',
+    textAlign: "center",
+    textDecorationLine: "underline",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: "center",
   },
 });
 

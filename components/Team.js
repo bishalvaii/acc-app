@@ -1,20 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
 
 const TeamPage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Meet Our Team</Text>
       <Text style={styles.description}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque, mauris ut rutrum
-        fringilla, sem dui consectetur nunc, ac cursus turpis dui vel massa. Fusce ut lacinia nunc.
-        Curabitur euismod dapibus mauris.
+        Discover the dedicated individuals who work together to create
+        exceptional experiences for you.
       </Text>
 
       <View style={styles.photoContainer}>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/user.png')}
+            source={require("../assets/kalugurung.jpg")}
             style={styles.photo}
             resizeMode="cover"
           />
@@ -23,7 +22,7 @@ const TeamPage = () => {
         </View>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/user.png')}
+            source={require("../assets/tirtha.jpg")}
             style={styles.photo}
             resizeMode="cover"
           />
@@ -32,7 +31,7 @@ const TeamPage = () => {
         </View>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/user.png')}
+            source={require("../assets/aajad.jpeg")}
             style={styles.photo}
             resizeMode="cover"
           />
@@ -41,7 +40,7 @@ const TeamPage = () => {
         </View>
         <View style={styles.photoItem}>
           <Image
-            source={require('../assets/user.png')}
+            source={require("../assets/chandra.jpeg")}
             style={styles.photo}
             resizeMode="cover"
           />
@@ -57,11 +56,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   description: {
@@ -69,28 +68,28 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   photoContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   photoItem: {
-    width: '48%',
+    width: "48%",
     marginBottom: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   photo: {
-    width: '100%',
+    width: "100%",
     aspectRatio: 1,
     marginBottom: 10,
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   titleText: {
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 

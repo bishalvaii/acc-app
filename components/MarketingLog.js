@@ -1,33 +1,31 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 
 const MarketingDetails = () => {
   const vehicles = [
     {
       id: 1,
-      name: 'Hotel updates',
-      logo: require('../assets/car.png'),
-      
-      desc: ' Hotel visited',
-      totalPassengers: '5'
-      
+      name: "Hotel updates",
+      logo: require("../assets/car.png"),
 
-    },
-    {
-        id: 2,
-        name: 'Social media updates',
-        logo: require('../assets/car.png'),
-       
-        desc: 'Post Shared'
+      desc: " Hotel visited",
+      totalPassengers: "5",
     },
     {
       id: 2,
-      name: 'Other updates',
-      logo: require('../assets/car.png'),
-     
-      desc: 'Campaign details',
-      totalPassengers: '10'
-  },
+      name: "Social media updates",
+      logo: require("../assets/car.png"),
+
+      desc: "Post Shared",
+    },
+    {
+      id: 2,
+      name: "Other updates",
+      logo: require("../assets/car.png"),
+
+      desc: "Campaign details",
+      totalPassengers: "10",
+    },
     // Add more hotel objects as needed
   ];
 
@@ -47,9 +45,11 @@ const MarketingDetails = () => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.headerText}>Marketing log details</Text>
+      <Text style={styles.headerText}>Marketing log details</Text>
       <TouchableOpacity style={styles.addButton} onPress={handleAddVehicles}>
-        <Text style={styles.addButtonLabel}>See updates on these marketing activities</Text>
+        <Text style={styles.addButtonLabel}>
+          See updates on these marketing activities
+        </Text>
       </TouchableOpacity>
 
       <FlatList
@@ -61,50 +61,54 @@ const MarketingDetails = () => {
   );
 };
 const styles = {
-    container: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: '#fff',
-    },
-    addButton: {
-      alignSelf: 'center',
-      backgroundColor: '#2196F3',
-      paddingVertical: 12,
-      paddingHorizontal: 24,
-      borderRadius: 4,
-      marginBottom: 16,
-    },
-    addButtonLabel: {
-      color: '#fff',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    hotelItemContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 12,
-    },
-    headerText: {
-
-        fontSize: 20,
-    },
-    hotelLogo: {
-      width: 64,
-      height: 64,
-      marginRight: 12,
-    },
-    hotelInfoContainer: {
-      flex: 1,
-    },
-    hotelName: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    hotelAddress: {
-      fontSize: 14,
-      color: '#888',
-    },
-  };
-  
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#fff",
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+    alignSelf: "center",
+  },
+  addButton: {
+    alignSelf: "center",
+    backgroundColor: "#2196F3",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 4,
+    marginBottom: 16,
+  },
+  addButtonLabel: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  hotelItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  headerText: {
+    fontSize: 20,
+  },
+  hotelLogo: {
+    width: 64,
+    height: 64,
+    marginRight: 12,
+  },
+  hotelInfoContainer: {
+    flex: 1,
+  },
+  hotelName: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  hotelAddress: {
+    fontSize: 14,
+    color: "#888",
+  },
+};
 
 export default MarketingDetails;

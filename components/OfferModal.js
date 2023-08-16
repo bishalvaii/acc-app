@@ -1,83 +1,116 @@
 import React from "react";
-import {View, Text,Modal, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons"; // Example: Using Ionicons for icons
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const OfferModal = ({ isVisible, onClose, offer}) => {
-    const formatDate = (timestamp) => {
-        if (timestamp && timestamp.toDate) {
-          const date = timestamp.toDate(); // Convert Firebase Timestamp to JavaScript Date
-          return date.toLocaleDateString(); // Format the date as a string
-        } else {
-          return "N/A"; // Return a default value if the date is not available or invalid
-        }
-      };
-    return (
-        <Modal 
-          visible={isVisible}
-          transparent
-          animationType="fade"
-          onRequestClose={onClose}
-          >
-            <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                    <Text style={styles.title}>{offer.title}</Text>
-                    <Text style={styles.description}>{offer.description}</Text>
-                    <Text style={styles.discount}>Discount: {offer.discountPercentage}%</Text>
-                    <Text style={styles.startDate}>Start Date: {formatDate(offer.startDate)}</Text>
-                    <Text style={styles.expiryDate}>Expirty Date: {formatDate(offer.expiryDate)}</Text>
-                    <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                        <Text style={styles.closeButtonText}>Close</Text>
-                    </TouchableOpacity>
-                </View>
+const OfferModal = ({ isVisible, onClose, offer }) => {
+  const formatDate = (timestamp) => {
+    if (timestamp && timestamp.toDate) {
+      const date = timestamp.toDate();
+      return date.toLocaleDateString();
+    } else {
+      return "N/A";
+    }
+  };
+
+  return (
+    <Modal
+      visible={isVisible}
+      transparent
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <Text style={styles.title}>{offer.title}</Text>
+          <Text style={styles.description}>{offer.description}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.infoRow}>
+              <MaterialCommunityIcons
+                name="ticket-percent"
+                size={24}
+                color="blue"
+              />{" "}
+              <Text style={styles.infoText}>
+                Discount: {offer.discountPercentage}%
+              </Text>
             </View>
-          </Modal>
-    )
-}
+            <View style={styles.infoRow}>
+              <Ionicons name="calendar" size={20} color="#007AFF" />
+              <Text style={styles.infoText}>
+                Start Date: {formatDate(offer.startDate)}
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Ionicons name="calendar" size={20} color="#007AFF" />
+              <Text style={styles.infoText}>
+                Expiry Date: {formatDate(offer.expiryDate)}
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
 const styles = StyleSheet.create({
- modalContainer: {
-    flex:1,
-    justifyContent: 'center',
-    alignItems:'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
- },
- modalContent: {
-    backgroundColor: '#fff',
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
-    alignItems:'center'
- },
- title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    alignItems: "center",
+    marginLeft: 20, // Add left spacing
+    marginRight: 20, // Add right spacing
+    width: "90%", // Limit width to 90% of the screen
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
     marginBottom: 10,
- },
+    color: "#333",
+  },
   description: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 20,
+    marginBottom: 15,
+    color: "#666",
+    textAlign: "center",
   },
-  discount: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  startDate: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  expiryDate: {
-    fontSize: 16,
+  infoContainer: {
     marginBottom: 20,
+    alignItems: "center",
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  infoText: {
+    marginLeft: 10,
+    fontSize: 16,
+    color: "#555",
   },
   closeButton: {
-    backgroundColor: '#007AFF',
-    padding: 10,
+    backgroundColor: "#007AFF",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
+    elevation: 3,
   },
   closeButtonText: {
-    color: '#FFF',
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: "bold",
   },
-  
+});
 
-})
- 
 export default OfferModal;
