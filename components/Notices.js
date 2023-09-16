@@ -14,7 +14,6 @@ const Notices = () => {
         <Text style={styles.headerText}>NOTICE!!</Text>
       </View>
       <Image source={require("../assets/acc.jpg")} style={styles.logo} />
-      {/* <Text style={styles.description}>{notice}</Text> */}
 
       <Text style={styles.additionalText}>
         We are closed from 11:30 a.m to 12:30 pm everyday forlunch time break .

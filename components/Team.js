@@ -1,7 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 
 const TeamPage = () => {
+  const windowWidth = Dimensions.get("window").width;
+  const imageWidth = (windowWidth - 50) / 2; // Adjust this value as needed
+  const imageHeight = imageWidth * 0.75; // Adjust this value as needed for the aspect ratio
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Meet Our Team</Text>
@@ -11,41 +15,62 @@ const TeamPage = () => {
       </Text>
 
       <View style={styles.photoContainer}>
-        <View style={styles.photoItem}>
-          <Image
-            source={require("../assets/kalugurung.jpg")}
-            style={styles.photo}
-            resizeMode="cover"
-          />
-          <Text style={styles.name}>Mr. Kalu Gurung</Text>
-          <Text style={styles.titleText}>Chairman</Text>
+        <View style={styles.row}>
+          <View style={styles.photoItem}>
+            <Image
+              source={require("../assets/kalugurung.jpg")}
+              style={{
+                ...styles.photo,
+                width: imageWidth,
+                height: imageHeight,
+              }}
+              resizeMode="cover"
+            />
+            <Text style={styles.name}>Mr. Kalu Gurung</Text>
+            <Text style={styles.titleText}>Chairman</Text>
+          </View>
+          <View style={styles.photoItem}>
+            <Image
+              source={require("../assets/tirtha.jpg")}
+              style={{
+                ...styles.photo,
+                width: imageWidth,
+                height: imageHeight,
+              }}
+              resizeMode="cover"
+            />
+            <Text style={styles.name}>Mr. Tirthaj Tripathi</Text>
+            <Text style={styles.titleText}>Director</Text>
+          </View>
         </View>
-        <View style={styles.photoItem}>
-          <Image
-            source={require("../assets/tirtha.jpg")}
-            style={styles.photo}
-            resizeMode="cover"
-          />
-          <Text style={styles.name}>Mr. Tirthaj Tripathi</Text>
-          <Text style={styles.titleText}>Director</Text>
-        </View>
-        <View style={styles.photoItem}>
-          <Image
-            source={require("../assets/aajad.jpeg")}
-            style={styles.photo}
-            resizeMode="cover"
-          />
-          <Text style={styles.name}>Mr. Aajad Shrestha</Text>
-          <Text style={styles.titleText}>Director</Text>
-        </View>
-        <View style={styles.photoItem}>
-          <Image
-            source={require("../assets/chandra.jpeg")}
-            style={styles.photo}
-            resizeMode="cover"
-          />
-          <Text style={styles.name}>Mr. Chandra Bahadur Karki</Text>
-          <Text style={styles.titleText}>Director</Text>
+
+        <View style={styles.row}>
+          <View style={styles.photoItem}>
+            <Image
+              source={require("../assets/aajad.jpeg")}
+              style={{
+                ...styles.photo,
+                width: imageWidth,
+                height: imageHeight,
+              }}
+              resizeMode="cover"
+            />
+            <Text style={styles.name}>Mr. Aajad Shrestha</Text>
+            <Text style={styles.titleText}>Director</Text>
+          </View>
+          <View style={styles.photoItem}>
+            <Image
+              source={require("../assets/chandra.jpeg")}
+              style={{
+                ...styles.photo,
+                width: imageWidth,
+                height: imageHeight,
+              }}
+              resizeMode="cover"
+            />
+            <Text style={styles.name}>Mr. Chandra Bahadur Karki</Text>
+            <Text style={styles.titleText}>Director</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -68,19 +93,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   photoContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  },
+  row: {
     flexDirection: "row",
-    flexWrap: "wrap",
     justifyContent: "space-between",
+    marginBottom: 10,
   },
   photoItem: {
-    width: "48%",
-    marginBottom: 20,
+    flex: 1,
     alignItems: "center",
+    margin: 5, // Adjust this value for spacing
   },
   photo: {
+    aspectRatio: 4 / 3, // Adjust this aspect ratio as needed
     width: "100%",
-    aspectRatio: 1,
-    marginBottom: 10,
+    borderRadius: 10,
   },
   name: {
     fontSize: 16,

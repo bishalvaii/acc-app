@@ -30,7 +30,7 @@ const OfferModal = ({ isVisible, onClose, offer }) => {
                 name="ticket-percent"
                 size={24}
                 color="blue"
-              />{" "}
+              />
               <Text style={styles.infoText}>
                 Discount: {offer.discountPercentage}%
               </Text>
